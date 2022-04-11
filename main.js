@@ -37,7 +37,7 @@ document.addEventListener('keydown', function(event) {
 			break;
 		case 39:
 			alert('Right was pressed');
-			
+
 			break;
 	}
 });
@@ -55,7 +55,7 @@ var img = document.createElement("img");
 
 function main() {
 	gameArea.start();
-
+	
 	img.src = "resource/placeholder.png";
 	gameArea.context.drawImage(img, gameArea.width / 2, gameArea.height / 2, 16, 16);
 }
