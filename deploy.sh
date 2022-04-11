@@ -1,5 +1,6 @@
 #!/bin/bash
 cd ~/game
 git pull
-npx serve -p 6621
+pkill `basename "$0"`
+nohup npx serve -p 6621 &
 
