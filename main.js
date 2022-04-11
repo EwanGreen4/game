@@ -47,15 +47,17 @@ var gameArea = {
 	start : function() {  
 		this.canvas.width = 480;  
 		this.canvas.height = 270;  
-		this.context = this.canvas.getContext("2d");  
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);  
 	}  
 }  
+
 var img = document.createElement("img");
 
 function main() {
 	gameArea.start();
-	
+
 	img.src = "resource/placeholder.png";
-	gameArea.context.drawImage(img, gameArea.width / 2, gameArea.height / 2, 16, 16);
+	img.width = 16;
+	img.height = 16;
+	context.drawImage(img, gameArea.width / 2, gameArea.height / 2);
 }
