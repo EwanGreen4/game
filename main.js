@@ -21,5 +21,10 @@ document.addEventListener('keydown', function(event) {
 });
 
 function main() {
+
+	var canvas = document.getElementById('canvas');
+	canvas.width = 640;
+	canvas.height = 440;
+
 	loadMainMenu();
 }
