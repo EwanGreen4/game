@@ -21,12 +21,5 @@ document.addEventListener('keydown', function(event) {
 });
 
 function main() {
-
-	var canvas = document.getElementById('canvas');
-	canvas.width = 640;
-	canvas.height = 440;
-	var ctx = canvas.getContext('2d');
-	//gameArea.context.drawImage(img, gameArea.width / 2, gameArea.height / 2);
-
 	loadMainMenu();
 }
