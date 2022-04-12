@@ -42,22 +42,16 @@ document.addEventListener('keydown', function(event) {
 	}
 });
 
-var gameArea = {  
-	canvas : document.createElement("canvas"),  
-	start : function() {  
-		this.canvas.width = 480;  
-		this.canvas.height = 270;  
-		document.body.insertBefore(this.canvas, document.body.childNodes[0]);  
-	}  
-}  
-
-var img = document.createElement("img");
-
 function main() {
-	gameArea.start();
+    var canvas = document.getElementById('canvas');
+    canvas.width = 500;
+    canvas.height = 500;
+    var ctx = canvas.getContext('2d');
 
-	img.src = "resource/placeholder.png";
-	img.width = 16;
-	img.height = 16;
-	context.drawImage(img, gameArea.width / 2, gameArea.height / 2);
+    var img = new Image(16, 16);
+    img.src = 'resource/placeholder.png';
+    img.onload = function() {
+        ctx.drawImage(img, canvas.width/2, canvas.height/2);
+    }
+	//gameArea.context.drawImage(img, gameArea.width / 2, gameArea.height / 2);
 }
