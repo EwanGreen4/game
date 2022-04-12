@@ -17,6 +17,7 @@ document.addEventListener('keydown', function(event) {
 			alert('Right was pressed');
 
 			break;
+            //this does work
 	}
 });
 
@@ -25,6 +26,9 @@ function main() {
 	var canvas = document.getElementById('canvas');
 	canvas.width = 640;
 	canvas.height = 440;
-
+        
+    var rect = new Rect(100, 100, 100, 100);
+    if(rect.contains(new Point(150, 150))) alert('test');
+    
 	loadMainMenu();
 }

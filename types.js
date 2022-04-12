@@ -24,8 +24,10 @@ class Rect { //globally mapped rect
 	topRight() { return new Point(right, top); }
 	bottomLeft() { return new Point(left, bottom); }
 	bottomRight() { return new Point(right, bottom); }
+    contains(point) { return point.x > this.left && point.x < this.right && point.y > this.top && point.y < this.bottom; 
+    }
 }
-class Player {
-	static x;
-	static y;
-}
+//class Player {
+//	static x;
+//	static y;
+//}

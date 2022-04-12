@@ -22,13 +22,18 @@ function loadMainMenu() {
 	imgLoad.onload = function() {
 		ctx.drawImage(this, (canvas.width / 3 * 2)- this.width / 2, height - this.height / 2);
 	}
+    imgLoad.addEventListener('click', () => {
+        alert("ee");
+    });
 	var imgSettings = new Image;
 	imgSettings.src = 'resource/menuSettings.png';
 	imgSettings.onload = function() {
 		ctx.drawImage(this, canvas.width / 2 - this.width / 2, height - this.height / 2);
 	}
-// 	imgSettings.onclick = loadSettingsMenu()
-	
+        imgLoad.addEventListener('pointerover', () => {
+            alert("e");
+        } );
+        
 }
 
 function loadSettingsMenu() {
@@ -38,3 +43,5 @@ function loadSettingsMenu() {
 function loadInventoryMenu() {
 	
 }
+
+
