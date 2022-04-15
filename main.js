@@ -6,7 +6,7 @@ function include() {
 	}
 }
 
-include('types.js', 'menu.js');
+include('types.min.js', 'menu.min.js');
 
 document.addEventListener('keydown', function(event) {
 	switch(event.keyCode) {
