@@ -6,7 +6,7 @@ function include() {
 	}
 }
 
-include('types.min.js', 'menu.min.js');
+include('types.js', 'menu.js');
 
 document.addEventListener('keydown', function(event) {
 	switch(event.keyCode) {
@@ -21,14 +21,21 @@ document.addEventListener('keydown', function(event) {
 	}
 });
 
-function main() {
+var oldtime = 0;
+function frameStep(time)
+{
+    let timestep = time - oldtime;
+    window.requestAnimationFrame(frameStep);
+}
 
+function main() {
 	var canvas = document.getElementById('canvas');
 	canvas.width = 640;
 	canvas.height = 440;
+    ctx = canvas.getContext('2d');
         
     var rect = new Rect(100, 100, 100, 100);
-    if(rect.contains(new Point(150, 150))) alert('test');
-    
-	loadMainMenu();
+    //if(rect.contains(new Point(150, 150))) alert('test');
+
+	loadMainMenu(ctx);
 }
