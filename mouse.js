@@ -1,3 +1,11 @@
+// Buttons in the "buttons" array below are NOT HTML elements; they are generic objects with positional parameters & an element parameter, for which it acts as a surrogate for events.
+// Use like so:
+
+//		var element = new Image();
+//		var button = {x: x, y: y, w: w, h: h, elem: element};
+//		mouse.buttons.push(button);
+//		element.onmousedown = callback;
+
 let mouse = {
 buttons: [],
 lastPos: {x: 0, y: 0},
