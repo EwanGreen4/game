@@ -1,21 +1,7 @@
-var buttons = [];
-document.getElementById('canvas').addEventListener('click', function(event) {
-    // Collision detection between clicked offset and element.
-    var canvas = document.getElementById('canvas');
-    let x = event.x - canvas.offsetLeft, y = event.y - canvas.offsetTop;
-
-    for(const button of buttons)
-    {
-        if(x > button.x && y > button.y && x < button.x+button.w && y < button.y+button.h)
-        {
-            button.onClick();
-        }
-    }
-
-}, false);
+include("mouse.js")
 
 function loadMainMenu() {
-    buttons.length = 0;
+    mouse.buttons.length = 0;
 
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d'); 
@@ -35,8 +21,10 @@ function loadMainMenu() {
 	var imgNew = new Image;
 	imgNew.src = 'resource/menuNew.png';
 	imgNew.onload = function() {
-        var newGameButton = {x: canvas.width / 3 - this.width / 2, y: height - this.height / 2, w: imgNew.width, h: imgNew.height, onClick: newGameMenu};
-        buttons.push(newGameButton);
+        var newGameButton = {x: canvas.width / 3 - this.width / 2, y: height - this.height / 2, w: imgNew.width, h: imgNew.height, elem: imgNew};
+        mouse.buttons.push(newGameButton);
+        imgNew.onmousedown = newGameMenu;
+		
         ctx.drawImage(this, newGameButton.x, newGameButton.y);
 	}
     
@@ -54,11 +42,12 @@ function loadMainMenu() {
 
 function newGameMenu()
 {
-    buttons.length = 0;
-    
-    let canvas = document.getElementById('canvas');
-    let ctx = canvas.getContext('2d'); 
-    ctx.clearRect(0, 0, canvas.w, canvas.h);
+//     buttons.length = 0;
+//     
+//     let canvas = document.getElementById('canvas');
+//     let ctx = canvas.getContext('2d'); 
+//     ctx.clearRect(0, 0, canvas.w, canvas.h);
+ 	console.log("button pressed");
 }
 
 function loadSettingsMenu() {
