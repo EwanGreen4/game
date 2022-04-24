@@ -20,7 +20,6 @@ help() {
 }
 
 argv=("$@")
-argPort=("--port" "-p")
 
 if [[ "${argv[*]}" =~ "--help" ]]
 then
@@ -32,15 +31,14 @@ source "$(dirname $(realpath $0))/common.sh"
 
 cd "$deployFolder"
 
-# Format; optional
+# FormatTING; optional
 if [[ ! "${argv[*]}" =~ "--no-format" ]]
 then
 	printf "Formatting source files.\n"
 	"$deployFolder/format.sh" > /dev/null
 fi
 
-
-# Minification stage; optional
+# Minification; optional
 if [[ "${argv[*]}" =~ "--no-minify" ]]
 then
 	cd "$baseDirectory"
