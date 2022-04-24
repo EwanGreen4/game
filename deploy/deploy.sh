@@ -15,10 +15,14 @@
 help() {
 	printf "$(basename $(realpath $0)) - Usage:
 	--help 			Show this help text.
-	--no-format		Omit the formatting stage.\n"
+	--no-format		Omit the formatting stage.
+	--no-minify		Omit the minification stage.\n"
 }
 
-if [[ $1 == "--help" ]]
+argv=("$@")
+argPort=("--port" "-p")
+
+if [[ "${argv[*]}" =~ "--help" ]]
 then
 	help
 	exit
@@ -28,48 +32,54 @@ source "$(dirname $(realpath $0))/common.sh"
 
 cd "$deployFolder"
 
-# Create deployment instance folder
-git -C "$baseDirectory" pull
-if [ -d "$instanceFolder" ]
-then
-	rm -rdf "$instanceFolder"
-fi
-mkdir "$instanceFolder"
-
-# Fabricate "deployment environment"
-for i in $(find "$baseDirectory" -maxdepth 1 -type d ! -name ".*" ! -name "$instanceFolderName" ! -name "$deployFolderName" ! -name "$(basename $baseDirectory)")
-do
-	basename="$(basename $i)"
-	dirname="$instanceFolder/$basename"
-	printf "Creating symlink for directory \'$(fileNameColorWrap $basename)\' (\'$(pathNameColorWrap $dirname)\').\n"
-	ln -s "$i" "$dirname"
-done
-
 # Format; optional
-if [[ $1 != "--no-format" ]]
+if [[ ! "${argv[*]}" =~ "--no-format" ]]
 then
 	printf "Formatting source files.\n"
 	"$deployFolder/format.sh" > /dev/null
 fi
 
-# Minification stage
-for i in $(find "$baseDirectory" -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*") # Potentially CSS in the future; not using any right now
-do
-	basename="$(basename $i)"
-	filename="$instanceFolder/$basename"
-	printf "Processing file \'$(fileNameColorWrap $basename)\'.\n"
-	python3 "$deployFolder/min-names.py" "$i" > "$filename"
-	if [[ $i == *html ]] # .min.html does not work
+
+# Minification stage; optional
+if [[ "${argv[*]}" =~ "--no-minify" ]]
+then
+	cd "$baseDirectory"
+else
+	# Create deployment instance folder
+	git -C "$baseDirectory" pull
+	if [ -d "$instanceFolder" ]
 	then
-		tmp=$(npx minify "$filename")
-		echo $tmp > "$filename"
-	else {
-		npx minify "$filename" > "$instanceFolder/${basename%.*}.min.js"
-		rm "$filename"
-	}
-	fi # minify will use the file ".minify.json" in the deploy folder for config
-done
+		rm -rdf "$instanceFolder"
+	fi
+	mkdir "$instanceFolder"
+
+	# Fabricate "deployment environment"
+	for i in $(find "$baseDirectory" -maxdepth 1 -type d ! -name ".*" ! -name "$instanceFolderName" ! -name "$deployFolderName" ! -name "$(basename $baseDirectory)")
+	do
+		basename="$(basename $i)"
+		dirname="$instanceFolder/$basename"
+		printf "Creating symlink for directory \'$(fileNameColorWrap $basename)\' (\'$(pathNameColorWrap $dirname)\').\n"
+		ln -s "$i" "$dirname"
+	done
+
+	for i in $(find "$baseDirectory" -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*") # Potentially CSS in the future; not using any right now
+	do
+		basename="$(basename $i)"
+		filename="$instanceFolder/$basename"
+		printf "Processing file \'$(fileNameColorWrap $basename)\'.\n"
+		python3 "$deployFolder/min-names.py" "$i" > "$filename"
+		if [[ $i == *html ]] # .min.html does not work
+		then
+			tmp=$(npx minify "$filename")
+			echo $tmp > "$filename"
+		else {
+			npx minify "$filename" > "$instanceFolder/${basename%.*}.min.js"
+			rm "$filename"
+		}
+		fi # minify will use the file ".minify.json" in the deploy folder for config
+	done
+	cd "$instanceFolder"
+fi
 
 printf "Running server.\n"
-cd $instanceFolder
-npx serve -p 6621 > /dev/null
+npx serve -p "$port" >> "$deployFolder/server-log.txt"

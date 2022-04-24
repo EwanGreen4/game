@@ -3,6 +3,6 @@
         "removeAttributeQuotes": false
     },
     "js": {
-        "ecma": 6
+        "ecma": 5
     },
 }

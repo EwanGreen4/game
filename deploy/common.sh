@@ -17,3 +17,5 @@ deployFolderName="deploy"
 deployFolder="$baseDirectory/$deployFolderName"
 instanceFolderName="instance"
 instanceFolder="$baseDirectory/$instanceFolderName"
+
+port="6621"
