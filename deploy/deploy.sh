@@ -54,7 +54,6 @@ do
 	basename="$(basename $i)"
 	filename="$instanceFolder/$basename"
 	printf "Processing file \'$(fileNameColorWrap $basename)\'.\n"
-	npx prettier --config "$deployFolder/.prettier.json" --write "$i" > /dev/null
 	python3 "$deployFolder/min-names.py" "$i" > "$filename"
 	if [[ $i == *html ]] # .min.html does not work
 	then
