@@ -22,7 +22,8 @@ do
 	python3 "./deploy/min-names.py" "$i" > "./$deployFolder/$i"
 	if [[ $i == *html ]] # .min.html does not work
 	then
-		npx minify "./$deployFolder/$i" >> "./$deployFolder/$i"
+		tmp=$(npx minify "./$deployFolder/$i")
+		echo $tmp > "./$deployFolder/$i"
 	else {
 		npx minify "./$deployFolder/$i" > "./$deployFolder/${i%.*}.min.js"
 		rm "./$deployFolder/$i"
