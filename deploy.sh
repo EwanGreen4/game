@@ -41,7 +41,7 @@ do
 	basename="$(basename $i)"
 	filename="$instanceFolder/$basename"
 	printf "Processing file \'\e[34m$basename\e[0m\'.\n"
-	npx prettier --write "$i" > /dev/null
+	npx prettier --config "$deployFolder/.prettierrc" --write "$i" > /dev/null
 	python3 "$deployFolder/min-names.py" "$i" > "$filename"
 	if [[ $i == *html ]] # .min.html does not work
 	then
