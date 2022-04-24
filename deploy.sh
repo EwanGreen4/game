@@ -12,12 +12,17 @@
 #		- Make edits accordingly (.js to .min.js, symlinks to emulate directory structure)
 #		- Statically host the instance via. serve
 
+help() {
+	printf "$(basename $(realpath $0)) - Usage:
+	--help 			Show this help text.
+	--no-format		Omit the formatting stage.\n"
+}
 
-# baseDirectory="$HOME/game"
-# deployFolderName="deploy"
-# deployFolder="$baseDirectory/$deployFolderName"
-# instanceFolderName="instance"
-# instanceFolder="$baseDirectory/$instanceFolderName"
+if [[ $1 == "--help" ]]
+then
+	help
+	exit
+fi
 
 source "$(dirname $(realpath $0))/deploy/common.sh"
 
