@@ -13,11 +13,13 @@
 #		- Statically host the instance via. serve
 
 
-baseDirectory="$(pwd)"
-deployFolderName="deploy"
-deployFolder="$baseDirectory/$deployFolderName"
-instanceFolderName="instance"
-instanceFolder="$baseDirectory/$instanceFolderName"
+# baseDirectory="$HOME/game"
+# deployFolderName="deploy"
+# deployFolder="$baseDirectory/$deployFolderName"
+# instanceFolderName="instance"
+# instanceFolder="$baseDirectory/$instanceFolderName"
+
+source "$(dirname $(realpath $0))/deploy/common.sh"
 
 cd "$deployFolder"
 
@@ -32,15 +34,21 @@ for i in $(find "$baseDirectory" -maxdepth 1 -type d ! -name ".*" ! -name "$inst
 do
 	basename="$(basename $i)"
 	dirname="$instanceFolder/$basename"
-	printf "Creating symlink for directory \'\e[34m$basename\e[0m\' (\'\e[34m$dirname\e[0m\').\n"
+	printf "Creating symlink for directory \'$(fileNameColorWrap $basename)\' (\'$(pathNameColorWrap $dirname)\').\n"
 	ln -s "$i" "$dirname"
 done
+
+if [[ $1 != "--no-format" ]]
+then
+	printf "Formatting source files.\n"
+	"$deployFolder/format.sh" > /dev/null
+fi
 
 for i in $(find "$baseDirectory" -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*") # Potentially CSS in the future; not using any right now
 do
 	basename="$(basename $i)"
 	filename="$instanceFolder/$basename"
-	printf "Processing file \'\e[34m$basename\e[0m\'.\n"
+	printf "Processing file \'$(fileNameColorWrap $basename)\'.\n"
 	npx prettier --config "$deployFolder/.prettier.json" --write "$i" > /dev/null
 	python3 "$deployFolder/min-names.py" "$i" > "$filename"
 	if [[ $i == *html ]] # .min.html does not work
