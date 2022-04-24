@@ -21,6 +21,7 @@ done
 for i in $(find . -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*")
 do
 	printf "Processing file \'\e[34m$(basename $i)\e[0m\'.\n"
+	npx prettier --write "$i" > /dev/null
 	python3 "./deploy/min-names.py" "$i" > "./$deployFolder/$i"
 	if [[ $i == *html ]] # .min.html does not work
 	then
