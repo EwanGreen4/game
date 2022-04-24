@@ -14,11 +14,13 @@ mkdir ./$deployFolder
 for i in $(find . -maxdepth 1 -type d ! -name ".*" ! -name "$deployFolder" ! -name "deploy")
 do
 	name=$(basename $i)
+	printf "Creating symlink for directory \'\e[34m$(basename $i)\e[0m\' (\e[34m$deployFolder/$(basename $i)\e[0m).\n"
 	ln -s "$(pwd)/$name" "./$deployFolder/$name"
 done
 
 for i in $(find . -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*")
 do
+	printf "Processing file \'\e[34m$(basename $i)\e[0m\'.\n"
 	python3 "./deploy/min-names.py" "$i" > "./$deployFolder/$i"
 	if [[ $i == *html ]] # .min.html does not work
 	then
