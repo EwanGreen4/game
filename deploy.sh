@@ -30,24 +30,26 @@ mkdir "$instanceFolder"
 
 for i in $(find "$baseDirectory" -maxdepth 1 -type d ! -name ".*" ! -name "$instanceFolderName" ! -name "$deployFolderName" ! -name "$(basename $baseDirectory)")
 do
-	name="$(basename $i)"
-	printf "Creating symlink for directory \'\e[34m$(basename $i)\e[0m\' (\'\e[34m$instanceFolder/$(basename $i)\e[0m\').\n"
-	ln -s "$i" "$instanceFolder/$name"
+	basename="$(basename $i)"
+	dirname="$instanceFolder/$basename"
+	printf "Creating symlink for directory \'\e[34m$basename\e[0m\' (\'\e[34m$dirname\e[0m\').\n"
+	ln -s "$i" "$dirname"
 done
 
-for i in $(find "$baseDirectory" -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*")
+for i in $(find "$baseDirectory" -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*") # Potentially CSS in the future; not using any right now
 do
 	basename="$(basename $i)"
+	filename="$instanceFolder/$basename"
 	printf "Processing file \'\e[34m$basename\e[0m\'.\n"
 	npx prettier --write "$i" > /dev/null
-	python3 "$deployFolder/min-names.py" "$i" > "$instanceFolder/$basename"
+	python3 "$deployFolder/min-names.py" "$i" > "$filename"
 	if [[ $i == *html ]] # .min.html does not work
 	then
-		tmp=$(npx minify "$instanceFolder/$basename")
-		echo $tmp > "$instanceFolder/$basename"
+		tmp=$(npx minify "$filename")
+		echo $tmp > "$filename"
 	else {
-		npx minify "$instanceFolder/$basename" > "$instanceFolder/${basename%.*}.min.js"
-		rm "$instanceFolder/$basename"
+		npx minify "$filename" > "$instanceFolder/${basename%.*}.min.js"
+		rm "$filename"
 	}
 	fi
 done
