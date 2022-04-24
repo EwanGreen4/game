@@ -28,6 +28,7 @@ source "$(dirname $(realpath $0))/common.sh"
 
 cd "$deployFolder"
 
+# Create deployment instance folder
 git -C "$baseDirectory" pull
 if [ -d "$instanceFolder" ]
 then
@@ -35,6 +36,7 @@ then
 fi
 mkdir "$instanceFolder"
 
+# Fabricate "deployment environment"
 for i in $(find "$baseDirectory" -maxdepth 1 -type d ! -name ".*" ! -name "$instanceFolderName" ! -name "$deployFolderName" ! -name "$(basename $baseDirectory)")
 do
 	basename="$(basename $i)"
@@ -43,12 +45,14 @@ do
 	ln -s "$i" "$dirname"
 done
 
+# Format; optional
 if [[ $1 != "--no-format" ]]
 then
 	printf "Formatting source files.\n"
 	"$deployFolder/format.sh" > /dev/null
 fi
 
+# Minification stage
 for i in $(find "$baseDirectory" -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*") # Potentially CSS in the future; not using any right now
 do
 	basename="$(basename $i)"
