@@ -1,7 +1,16 @@
+#!/usr/bin/env python
+
+# min-names.py - Ewan Green
+
+# This script will use regular expressions to find instances of .js that we
+# want to replace with .min.js. The only time we would want to do that is
+# between keywords "MIN-START" and "MIN-END", so as to not mess with external
+# .js files like those included as a library otherwise not minified.
+
 import re
 import sys
 
-delim = "ඞඞඞ"
+delim = "ඞඞඞ" 
 
 with open(sys.argv[1], "r") as f:
     data = f.read().replace('\n', delim)

@@ -1,4 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# deploy.sh - Ewan Green
+
+# Script for deploying the game as a static webpage. Makes no alterations to
+# the existing code (except for formatting it). It can be tested locally 
+# (within browser with non-minified versions) as well as deployed.
+
+# This script will do the following:
+#		- Format source files
+#		- Create an instance folder with minified versions of the code
+#		- Make edits accordingly (.js to .min.js, symlinks to emulate directory structure)
+#		- Statically host the instance via. serve
 
 cd ~/game
 git pull
@@ -34,6 +46,6 @@ do
 	fi
 done
 
-printf "Running server."
+printf "Running server.\n"
 cd ./$deployFolder
 npx serve -p 6621 > /dev/null
