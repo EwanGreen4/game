@@ -33,9 +33,16 @@ function loadMainMenu() {
       elem: imgNew
     };
     mouse.buttons.push(newGameButton);
-    imgNew.onmousedown = newGameMenu;
 
     ctx.drawImage(this, newGameButton.x, newGameButton.y);
+  }
+    imgNew.onmouseenter = function() { this.src = 'resource/menuNewHover.png' }
+  imgNew.onmouseleave = function() { this.src = 'resource/menuNew.png' }
+  imgNew.onmouseup = function() { this.src = 'resource/menuNewHover.png' }
+  imgNew.onmousedown = function() {
+    newGameMenu()
+    const str = 'resource/menuNewDown.png'
+    if(this.src != str) this.src = str
   }
 
   var imgLoad = new Image;
