@@ -12,41 +12,46 @@
 #		- Make edits accordingly (.js to .min.js, symlinks to emulate directory structure)
 #		- Statically host the instance via. serve
 
-cd ~/game
-git pull
 
-deployFolderName="instance"
-deployFolder="$(pwd)/$deployFolderName"
+baseDirectory="$(pwd)"
+deployFolderName="deploy"
+deployFolder="$baseDirectory/$deployFolderName"
+instanceFolderName="instance"
+instanceFolder="$baseDirectory/$instanceFolderName"
 
-if [ -d "$deployFolder" ]
+cd "$deployFolder"
+
+git -C "$baseDirectory" pull
+if [ -d "$instanceFolder" ]
 then
-	rm -rdf "$deployFolder"
+	rm -rdf "$instanceFolder"
 fi
-mkdir "$deployFolder"
+mkdir "$instanceFolder"
 
-for i in $(find . -maxdepth 1 -type d ! -name ".*" ! -name "$deployFolderName" ! -name "deploy")
+for i in $(find "$baseDirectory" -maxdepth 1 -type d ! -name ".*" ! -name "$instanceFolderName" ! -name "$deployFolderName" ! -name "$(basename $baseDirectory)")
 do
-	name=$(basename $i)
-	printf "Creating symlink for directory \'\e[34m$(basename $i)\e[0m\' (\'\e[34m$deployFolder/$(basename $i)\e[0m\').\n"
-	ln -s "$(pwd)/$name" "$deployFolder/$name"
+	name="$(basename $i)"
+	printf "Creating symlink for directory \'\e[34m$(basename $i)\e[0m\' (\'\e[34m$instanceFolder/$(basename $i)\e[0m\').\n"
+	ln -s "$i" "$instanceFolder/$name"
 done
 
-for i in $(find . -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*")
+for i in $(find "$baseDirectory" -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*")
 do
-	printf "Processing file \'\e[34m$(basename $i)\e[0m\'.\n"
+	basename="$(basename $i)"
+	printf "Processing file \'\e[34m$basename\e[0m\'.\n"
 	npx prettier --write "$i" > /dev/null
-	python3 "./deploy/min-names.py" "$i" > "$deployFolder/$i"
+	python3 "$deployFolder/min-names.py" "$i" > "$instanceFolder/$basename"
 	if [[ $i == *html ]] # .min.html does not work
 	then
-		tmp=$(npx minify "$deployFolder/$i")
-		echo $tmp > "$deployFolder/$i"
+		tmp=$(npx minify "$instanceFolder/$basename")
+		echo $tmp > "$instanceFolder/$basename"
 	else {
-		npx minify "$deployFolder/$i" > "$deployFolder/${i%.*}.min.js"
-		rm "$deployFolder/$i"
+		npx minify "$instanceFolder/$basename" > "$instanceFolder/${basename%.*}.min.js"
+		rm "$instanceFolder/$basename"
 	}
 	fi
 done
 
 printf "Running server.\n"
-cd $deployFolder
+cd $instanceFolder
 npx serve -p 6621 > /dev/null
