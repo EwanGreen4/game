@@ -14,7 +14,7 @@ mkdir ./$deployFolder
 for i in $(find . -maxdepth 1 -type d ! -name ".*" ! -name "$deployFolder" ! -name "deploy")
 do
 	name=$(basename $i)
-	printf "Creating symlink for directory \'\e[34m$(basename $i)\e[0m\' (\e[34m$deployFolder/$(basename $i)\e[0m).\n"
+	printf "Creating symlink for directory \'\e[34m$(basename $i)\e[0m\' (\'\e[34m$deployFolder/$(basename $i)\e[0m\').\n"
 	ln -s "$(pwd)/$name" "./$deployFolder/$name"
 done
 
