@@ -41,7 +41,7 @@ do
 	basename="$(basename $i)"
 	filename="$instanceFolder/$basename"
 	printf "Processing file \'\e[34m$basename\e[0m\'.\n"
-	npx prettier --config "$deployFolder/.prettierrc" --write "$i" > /dev/null
+	npx prettier --config "$deployFolder/.prettier.json" --write "$i" > /dev/null
 	python3 "$deployFolder/min-names.py" "$i" > "$filename"
 	if [[ $i == *html ]] # .min.html does not work
 	then
@@ -51,7 +51,7 @@ do
 		npx minify "$filename" > "$instanceFolder/${basename%.*}.min.js"
 		rm "$filename"
 	}
-	fi
+	fi # minify will use the file ".minify.json" in the deploy folder for config
 done
 
 printf "Running server.\n"

@@ -1,0 +1,8 @@
+{
+    "html": {
+        "removeAttributeQuotes": false
+    },
+    "js": {
+        "ecma": 5
+    },
+}
