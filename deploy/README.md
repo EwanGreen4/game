@@ -7,3 +7,10 @@ What it does:
   - Symlinks all non-meta directories of the parent
   - Minifies all .js & .html files (.js -> .min.js)
   - Replaces all instances of ".js" with ".min.js" between keywords MIN-START and MIN-END; applies to .html and .js 
+
+Dependencies:
+- Python (3+? Not sure)
+- Node.js and NPM, with the following packages
+  - `minify`
+  - `prettier`
+  - `serve`
