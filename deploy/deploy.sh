@@ -44,8 +44,9 @@ trap deleteInstance SIGINT
 trap deleteInstance SIGTSTP
 
 cd "$deployFolder"
+git -C "$baseDirectory" pull
 
-# FormatTING; optional
+# Formatting; optional
 if [[ ! "${argv[*]}" =~ "--no-format" ]]
 then
 	printf "Formatting source files.\n"
@@ -58,7 +59,6 @@ then
 	cd "$baseDirectory"
 else
 	# Create deployment instance folder
-	git -C "$baseDirectory" pull
 	deleteInstance --no-exit
 	mkdir "$instanceFolder"
 
