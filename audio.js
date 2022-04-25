@@ -2,7 +2,7 @@ include("external/jsxm/xm.js", "external/jsxm/xmeffects.js");
 
 let audio = {
 	playing: false,
-	loadFile: function(uri) {
+	loadFile: function (uri) {
 		if (!window.XMPlayer) {
 			window.XMPlayer = {};
 		}
@@ -11,7 +11,7 @@ let audio = {
 			window.XMView = {};
 		}
 		XMPlayer.init();
-		
+
 		var xmReq = new XMLHttpRequest();
 		xmReq.open("GET", uri, true);
 		xmReq.responseType = "arraybuffer";
@@ -25,14 +25,12 @@ let audio = {
 		};
 		xmReq.send(null);
 	},
-	play: function() {
+	play: function () {
 		XMPlayer.play();
 		playing = true;
 	},
-	pause: function() {
+	pause: function () {
 		XMPlayer.pause();
 		playing = false;
-	}
-}
-
-
+	},
+};

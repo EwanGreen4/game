@@ -70,17 +70,15 @@ function loadMainMenu() {
 			Math.round(height - this.height / 2)
 		);
 	};
-	
-	
+
 	audio.loadFile("resource/elw-sick.xm");
-  
-// 	window.XMPlayer.init();
-// 	audio.setSong("resource/elw-sick.xm")
+
+	// 	window.XMPlayer.init();
+	// 	audio.setSong("resource/elw-sick.xm")
 }
 
 function newGameMenu() {
-	if(!audio.playing)
-		audio.play();
+	if (!audio.playing) audio.play();
 	else audio.pause();
 }
 
