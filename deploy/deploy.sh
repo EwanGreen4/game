@@ -29,6 +29,20 @@ fi
 
 source "$(dirname $(realpath $0))/common.sh"
 
+deleteInstance() {
+	if [ -d "$instanceFolder" ]
+	then
+		rm -rdf "$instanceFolder"
+	fi
+	if [[ "$1" != "--no-exit" ]]
+	then
+		exit
+	fi
+}
+
+trap deleteInstance SIGINT
+trap deleteInstance SIGTSTP
+
 cd "$deployFolder"
 
 # FormatTING; optional
@@ -45,10 +59,7 @@ then
 else
 	# Create deployment instance folder
 	git -C "$baseDirectory" pull
-	if [ -d "$instanceFolder" ]
-	then
-		rm -rdf "$instanceFolder"
-	fi
+	deleteInstance --no-exit
 	mkdir "$instanceFolder"
 
 	# Fabricate "deployment environment"
