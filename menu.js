@@ -47,9 +47,8 @@ function loadMainMenu() {
 		this.src = "resource/menuNewHover.png";
 	};
 	imgNew.onmousedown = function () {
-		newGameMenu();
 		const str = "resource/menuNewDown.png";
-		if (this.src != str) this.src = str;
+		newGameMenu();
 	};
 
 	var imgLoad = new Image();
@@ -70,11 +69,8 @@ function loadMainMenu() {
 			Math.round(height - this.height / 2)
 		);
 	};
-
+	
 	audio.loadFile("resource/elw-sick.xm");
-
-	// 	window.XMPlayer.init();
-	// 	audio.setSong("resource/elw-sick.xm")
 }
 
 function newGameMenu() {
