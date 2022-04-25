@@ -22,13 +22,13 @@ function loadMainMenu() {
 		canvas.height / 3
 	);
 
-	var height = (canvas.height / 3) * 2;
+	var height = Math.round((canvas.height / 3) * 2);
 	var imgNew = new Image();
 	imgNew.src = "resource/menuNew.png";
 	imgNew.onload = function () {
 		var newGameButton = {
-			x: canvas.width / 3 - this.width / 2,
-			y: height - this.height / 2,
+			x: Math.round(canvas.width / 3 - this.width / 2),
+			y: Math.round(height - this.height / 2),
 			w: imgNew.width,
 			h: imgNew.height,
 			elem: imgNew,
@@ -57,8 +57,8 @@ function loadMainMenu() {
 	imgLoad.onload = function () {
 		ctx.drawImage(
 			this,
-			(canvas.width / 3) * 2 - this.width / 2,
-			height - this.height / 2
+			Math.round((canvas.width / 3) * 2 - this.width / 2),
+			Math.round(height - this.height / 2)
 		);
 	};
 	var imgSettings = new Image();
@@ -66,8 +66,8 @@ function loadMainMenu() {
 	imgSettings.onload = function () {
 		ctx.drawImage(
 			this,
-			canvas.width / 2 - this.width / 2,
-			height - this.height / 2
+			Math.round(canvas.width / 2 - this.width / 2),
+			Math.round(height - this.height / 2)
 		);
 	};
 }
