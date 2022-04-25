@@ -1,7 +1,7 @@
 includedFiles = [];
 function include() {
-	for (var e = 0; e < arguments.length; e++) {
-		name = arguments[e];
+	for (let i = 0; i < arguments.length; i++) {
+		name = arguments[i];
 		if (includedFiles.indexOf(name) == -1) {
 			includedFiles.push(name);
 			var t = document.createElement("script");
@@ -15,8 +15,8 @@ function include() {
 include("menu.js", "audio.js");
 //MIN-END
 
-document.addEventListener("keydown", function (e) {
-	switch (e.keyCode) {
+document.addEventListener("keydown", function (event) {
+	switch (event.keyCode) {
 		case 37:
 			alert("Left was pressed");
 			break;
@@ -26,12 +26,12 @@ document.addEventListener("keydown", function (e) {
 });
 
 window.addEventListener("resize", function (event) {
-	var canvas = document.getElementById("canvas");
+	let canvas = document.getElementById("canvas");
 	canvas.width = window.innerWidth - canvas.offsetLeft * 3;
 	canvas.height = window.innerHeight - canvas.offsetTop * 3;
 });
 
-var framedata = {
+let framedata = {
     oldtime: 0,
     canvas: document.getElementById("canvas"),
     ctx: framedata.canvas.getContext("2d"),
@@ -50,7 +50,7 @@ function frameStep(newtime) {
 
 function main() {
 	document.body.style.overflow = "hidden";
-	var canvas = document.getElementById("canvas");
+	let canvas = document.getElementById("canvas");
 	(canvas.width = window.innerWidth - canvas.offsetLeft * 3),
 		(canvas.height = window.innerHeight - canvas.offsetTop * 3),
 		(ctx = canvas.getContext("2d"));
