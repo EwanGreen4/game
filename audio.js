@@ -33,8 +33,8 @@ let audio = {
 		XMPlayer.pause();
 		playing = false;
 	},
-	stop: function() {
+	stop: function () {
 		XMPlayer.stop();
 		playing = false;
-	}
+	},
 };
