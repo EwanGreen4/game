@@ -27,8 +27,8 @@ document.addEventListener("keydown", function (e) {
 
 window.addEventListener('resize', function(event){
 	var canvas = document.getElementById("canvas");
-	canvas.width = window.innerWidth - canvas.offsetLeft;
-    canvas.height = window.innerHeight - canvas.offsetTop;
+	canvas.width = window.innerWidth - canvas.offsetLeft*3;
+    canvas.height = window.innerHeight - canvas.offsetTop*3;
 })
 
 var oldtime = 0;
@@ -44,7 +44,8 @@ function frameStep(newtime) {
 }
 
 function main() {
+    document.body.style.overflow = "hidden";
 	var canvas = document.getElementById("canvas");
-	(canvas.width = window.innerWidth - canvas.offsetLeft), (canvas.height = window.innerHeight - canvas.offsetTop), (ctx = canvas.getContext("2d"));
+	(canvas.width = window.innerWidth - canvas.offsetLeft*3), (canvas.height = window.innerHeight - canvas.offsetTop*3), (ctx = canvas.getContext("2d"));
 	loadMainMenu(ctx);
 }
