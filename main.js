@@ -25,27 +25,29 @@ document.addEventListener("keydown", function (e) {
 	}
 });
 
-window.addEventListener('resize', function(event){
+window.addEventListener("resize", function (event) {
 	var canvas = document.getElementById("canvas");
-	canvas.width = window.innerWidth - canvas.offsetLeft*3;
-    canvas.height = window.innerHeight - canvas.offsetTop*3;
-})
+	canvas.width = window.innerWidth - canvas.offsetLeft * 3;
+	canvas.height = window.innerHeight - canvas.offsetTop * 3;
+});
 
 var oldtime = 0;
 function frameStep(newtime) {
-    let frametime = oldtime-newtime;
-    oldtime = newtime;
+	let frametime = oldtime - newtime;
+	oldtime = newtime;
 
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas,height);
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	ctx.clearRect(0, 0, canvas.width, canvas, height);
 
 	window.requestAnimationFrame(frameStep);
 }
 
 function main() {
-    document.body.style.overflow = "hidden";
+	document.body.style.overflow = "hidden";
 	var canvas = document.getElementById("canvas");
-	(canvas.width = window.innerWidth - canvas.offsetLeft*3), (canvas.height = window.innerHeight - canvas.offsetTop*3), (ctx = canvas.getContext("2d"));
+	(canvas.width = window.innerWidth - canvas.offsetLeft * 3),
+		(canvas.height = window.innerHeight - canvas.offsetTop * 3),
+		(ctx = canvas.getContext("2d"));
 	loadMainMenu(ctx);
 }
