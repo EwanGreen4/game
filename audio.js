@@ -6,17 +6,17 @@ let audio = {
 		if (!window.XMPlayer) {
 			window.XMPlayer = {};
 		}
-		var XMPlayer = window.XMPlayer;
+		let XMPlayer = window.XMPlayer;
 		if (!window.XMView) {
 			window.XMView = {};
 		}
 		XMPlayer.init();
 
-		var xmReq = new XMLHttpRequest();
+		let xmReq = new XMLHttpRequest();
 		xmReq.open("GET", uri, true);
 		xmReq.responseType = "arraybuffer";
 		xmReq.onload = function (xmEvent) {
-			var arrayBuffer = xmReq.response;
+			let arrayBuffer = xmReq.response;
 			if (arrayBuffer) {
 				XMPlayer.load(arrayBuffer);
 			} else {

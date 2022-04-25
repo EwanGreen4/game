@@ -14,19 +14,19 @@ function loadMainMenu() {
 
 	ctx.fillStyle = "#000000";
 	ctx.font = "bold 48px serif";
-	var text = "This is the game";
-	var textMetrics = ctx.measureText(text);
+	let text = "This is the game";
+	let textMetrics = ctx.measureText(text);
 	ctx.fillText(
 		text,
 		canvas.width / 2 - textMetrics.width / 2,
 		canvas.height / 3
 	);
 
-	var height = Math.round((canvas.height / 3) * 2);
-	var imgNew = new Image();
+	let height = Math.round((canvas.height / 3) * 2);
+	let imgNew = new Image();
 	imgNew.src = "resource/menuNew.png";
 	imgNew.onload = function () {
-		var newGameButton = {
+		let newGameButton = {
 			x: Math.round(canvas.width / 3 - this.width / 2),
 			y: Math.round(height - this.height / 2),
 			w: imgNew.width,
@@ -51,7 +51,7 @@ function loadMainMenu() {
 		newGameMenu();
 	};
 
-	var imgLoad = new Image();
+	let imgLoad = new Image();
 	imgLoad.src = "resource/menuLoad.png";
 	imgLoad.onload = function () {
 		ctx.drawImage(
@@ -60,7 +60,7 @@ function loadMainMenu() {
 			Math.round(height - this.height / 2)
 		);
 	};
-	var imgSettings = new Image();
+	let imgSettings = new Image();
 	imgSettings.src = "resource/menuSettings.png";
 	imgSettings.onload = function () {
 		ctx.drawImage(

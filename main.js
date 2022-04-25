@@ -4,7 +4,7 @@ function include() {
 		name = arguments[i];
 		if (includedFiles.indexOf(name) == -1) {
 			includedFiles.push(name);
-			var t = document.createElement("script");
+			let t = document.createElement("script");
 			(t.src = name),
 				document.getElementsByTagName("head").item(0).appendChild(t);
 		}

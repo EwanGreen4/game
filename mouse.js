@@ -3,8 +3,8 @@
 // as a surrogate for events.
 // Use like so:
 
-//		var element = new Image();
-//		var button = {x: x, y: y, w: w, h: h, elem: element};
+//		let element = new Image();
+//		let button = {x: x, y: y, w: w, h: h, elem: element};
 //		mouse.buttons.push(button);
 //		element.onmousedown = callback;
 
@@ -38,7 +38,7 @@ mouse.trackedEvents.forEach((event) =>
 	document.getElementById("canvas").addEventListener(
 		event,
 		function (event) {
-			var canvas = document.getElementById("canvas");
+			let canvas = document.getElementById("canvas");
 			mouse.newPos = {
 				x: event.x - canvas.offsetLeft,
 				y: event.y - canvas.offsetTop,
