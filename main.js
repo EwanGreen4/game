@@ -25,13 +25,26 @@ document.addEventListener("keydown", function (e) {
 	}
 });
 
+window.addEventListener('resize', function(event){
+	var canvas = document.getElementById("canvas");
+	canvas.width = window.innerWidth - canvas.offsetLeft;
+    canvas.height = window.innerHeight - canvas.offsetTop;
+})
+
 var oldtime = 0;
-function frameStep(e) {
+function frameStep(newtime) {
+    let frametime = oldtime-newtime;
+    oldtime = newtime;
+
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas,height);
+
 	window.requestAnimationFrame(frameStep);
 }
 
 function main() {
-	var e = document.getElementById("canvas");
-	(e.width = 640), (e.height = 440), (ctx = e.getContext("2d"));
+	var canvas = document.getElementById("canvas");
+	(canvas.width = window.innerWidth - canvas.offsetLeft), (canvas.height = window.innerHeight - canvas.offsetTop), (ctx = canvas.getContext("2d"));
 	loadMainMenu(ctx);
 }
