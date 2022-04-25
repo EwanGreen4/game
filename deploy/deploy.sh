@@ -71,7 +71,7 @@ else
 		ln -s "$i" "$dirname"
 	done
 
-	for i in $(find "$baseDirectory" -maxdepth 1 -type f -name "*.js" -o -name "*.html" ! -name "*.min.*") # Potentially CSS in the future; not using any right now
+	for i in $(find "$baseDirectory" -maxdepth 1 -type f -name "*.js" -o -name "*.html" -o -name "*.css" ! -name "*.min.*")
 	do
 		basename="$(basename $i)"
 		filename="$instanceFolder/$basename"
@@ -82,7 +82,7 @@ else
 			tmp=$(npx minify "$filename")
 			echo $tmp > "$filename"
 		else {
-			npx minify "$filename" > "$instanceFolder/${basename%.*}.min.js"
+			npx minify "$filename" > "$instanceFolder/${basename%.*}.min.${basename##*.}"
 			rm "$filename"
 		}
 		fi # minify will use the file ".minify.json" in the deploy folder for config

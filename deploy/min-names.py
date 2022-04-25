@@ -12,13 +12,17 @@ import sys
 
 if len(sys.argv) > 1:
     delim = "ඞඞඞ"  # eh
+    extensions = ["js", "css"]
     with open(sys.argv[1], "r") as f:
         data = f.read().replace('\n', delim)
         
     x = re.findall("MIN-START(.*?)MIN-END", data) # Must use non-greedy matching or it will match all between first MIN-START and last MIN-END (bad)
     if x != None:
         for i in x:
-            postStr = re.sub(r'\w*(?<!\.min\.)js', 'min.js', i).replace(delim, '\n')
+            postStr = i
+            for extension in extensions:
+                postStr = re.sub(rf'\w*(?<!\.min\.){extension}', 'min.' + extension, postStr).replace(delim, '\n')
+                
             data = data.replace(i, postStr)
     
     data = data.replace(delim, '\n')
