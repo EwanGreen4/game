@@ -1,5 +1,5 @@
 //MIN-START
-include("mouse.js");
+include("mouse.js", "audio.js");
 //MIN-END
 
 function loadMainMenu() {
@@ -70,15 +70,18 @@ function loadMainMenu() {
 			Math.round(height - this.height / 2)
 		);
 	};
+	
+	
+	audio.loadFile("resource/elw-sick.xm");
+  
+// 	window.XMPlayer.init();
+// 	audio.setSong("resource/elw-sick.xm")
 }
 
 function newGameMenu() {
-	//     buttons.length = 0;
-	//
-	//     let canvas = document.getElementById('canvas');
-	//     let ctx = canvas.getContext('2d');
-	//     ctx.clearRect(0, 0, canvas.w, canvas.h);
-	console.log("button pressed");
+	if(!audio.playing)
+		audio.play();
+	else audio.pause();
 }
 
 function loadSettingsMenu() {

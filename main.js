@@ -12,7 +12,7 @@ function include() {
 }
 
 //MIN-START
-include("menu.js");
+include("menu.js", "audio.js");
 //MIN-END
 
 document.addEventListener("keydown", function (e) {
