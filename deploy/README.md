@@ -1,5 +1,5 @@
 ### Deployment scripts for [game]
-These scripts are completely optional. The game can be tested on its own via. conventional webpage testing methods (opening index.html in a browser & letting it all happen from there). However, since we plan to provide a more centralized version of the game for people to actually play, deployment scripts are necessary.
+These scripts are completely optional. The game can be tested on its own via. conventional webpage testing methods (opening index.html in a browser & letting it all happen from there), given CORS policies are allowed. However, since we plan to provide a centralized version of the game for people to actually play, deployment scripts are necessary. This will also be needed if your browser doesn't support CORS requests via. file://.
 
 What it does:
 - Formats all existing .js and .html files for no reason other than cleanliness
