@@ -9,14 +9,14 @@ class Camera {
 		this.zoom = 1;
 	}
 	update(canvas, boundx, boundy) {
-		if (x - w / 2 < 0) x = w / 2;
-		else if (x + w / 2 > boundx) x = boundx - w / 2;
-		if (y - h / 2 < 0) y = h / 2;
-		else if (x + w / 2 > boundy) y = boundy - h / 2;
+		if (this.x - this.w / 2 < 0) this.x = this.w / 2;
+		else if (this.x + this.w / 2 > boundx) this.x = boundx - this.w / 2;
+		if (this.y - this.h / 2 < 0) this.y = this.h / 2;
+		else if (this.x + this.w / 2 > boundy) this.y = boundy - this.h / 2;
 
-		sizefac = round((canvas.h / idealh) * zoom);
-		h = canvas.height*sizefac;
-		w = (canvas.width / canvas.h) * height * zoom;
+		sizefac = round((canvas.height / this.idealh) * this.zoom);
+		this.h = canvas.height*this.sizefac;
+		this.w = (canvas.width / canvas.height) * this.h * this.zoom;
 	}
 }
 
