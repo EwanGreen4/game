@@ -19,8 +19,9 @@ if len(sys.argv) > 1:
     if x != None:
         for i in x:
             postStr = re.sub(r'\w*(?<!\.min\.)js', 'min.js', i).replace(delim, '\n')
-            data = data.replace(i, postStr).replace(delim, '\n')
+            data = data.replace(i, postStr)
     
+    data = data.replace(delim, '\n')
     print(data)
     
 else:
