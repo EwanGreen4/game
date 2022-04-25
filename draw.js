@@ -8,16 +8,15 @@ class Camera {
 		this.sizefac = 1;
 		this.zoom = 1;
 	}
-	update(ctx, boundx, boundy) {
-		var canvas = ctx.canvas;
+	update(canvas, boundx, boundy) {
 		if (x - w / 2 < 0) x = w / 2;
 		else if (x + w / 2 > boundx) x = boundx - w / 2;
 		if (y - h / 2 < 0) y = h / 2;
 		else if (x + w / 2 > boundy) y = boundy - h / 2;
 
 		sizefac = round((canvas.h / idealh) * zoom);
-		h = canvas.h.sizefac;
-		w = (canvas.w / canvas.h) * height * zoom;
+		h = canvas.height*sizefac;
+		w = (canvas.width / canvas.h) * height * zoom;
 	}
 }
 
