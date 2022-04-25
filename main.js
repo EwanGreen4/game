@@ -31,14 +31,19 @@ window.addEventListener('resize', function(event){
     canvas.height = window.innerHeight - canvas.offsetTop*3;
 })
 
-var oldtime = 0;
+var framedata = {
+    oldtime: 0,
+    canvas: document.getElementById("canvas"),
+    ctx: framedata.canvas.getContext("2d"),
+    camera: Camera(0, 0),
+    map: {w: 0, h: 0}
+}
 function frameStep(newtime) {
-    let frametime = oldtime-newtime;
-    oldtime = newtime;
+    let frametime = framedata.oldtime - newtime;
+    framedata.oldtime = newtime;
+    framedata.ctx.clearRect(0, 0, canvas.width, canvas,height);
+    framedata.camera.update(framedata.canvas, map.w, map.h);
 
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas,height);
 
 	window.requestAnimationFrame(frameStep);
 }
