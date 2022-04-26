@@ -2,7 +2,14 @@
 include("mouse.js", "audio.js");
 //MIN-END
 
+const mainMenuEnum = {
+    invalid: 0,
+    newGame: 1,
+    loadGame: 2,
+    settings: 3
+}
 function loadMainMenu() {
+    let conclusion = mainMenuEnum.invalid
 	mouse.buttons.length = 0;
 
 	let canvas = document.getElementById("canvas");
@@ -48,6 +55,7 @@ function loadMainMenu() {
 	};
 	imgNew.onmousedown = function () {
 		this.src = "resource/menuNewDown.png";
+        conclusion = mainMenuEnum.newGame
 		newGameMenu();
 	};
 
@@ -71,15 +79,13 @@ function loadMainMenu() {
 	};
 
 	audio.loadFile("resource/elw-sick.xm");
+    
+    //while(conclusion === mainMenuEnum.invalid) {
+     //   console.log("test lol")
+    //}
+    return conclusion;
 }
 
 function newGameMenu() {
-	if (!audio.playing) audio.play();
-	else audio.pause();
+    
 }
-
-function loadSettingsMenu() {
-	alert("Settings menu");
-}
-
-function loadInventoryMenu() {}

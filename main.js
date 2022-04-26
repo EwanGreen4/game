@@ -54,5 +54,18 @@ function main() {
 	(canvas.width = window.innerWidth - canvas.offsetLeft * 3),
 		(canvas.height = window.innerHeight - canvas.offsetTop * 3),
 		(ctx = canvas.getContext("2d"));
-	loadMainMenu(ctx);
+        let result =  loadMainMenu(ctx);
+        switch(loadMainMenu(ctx)) { // Wait for the main menu
+            case mainMenuEnum.newGame:
+                    alert("test")
+                break;
+            case mainMenuEnum.loadGame:
+                break;
+            case mainMenuEnum.settings:
+                break;
+        }
+        frameStep(0)
+    //let exitQueued = false;
+    //while(!exitQueued) {
+    //}
 }
