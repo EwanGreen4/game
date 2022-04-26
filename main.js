@@ -34,7 +34,7 @@ window.addEventListener("resize", function (event) {
 let framedata = {
     oldtime: 0,
     canvas: document.getElementById("canvas"),
-    ctx: framedata.canvas.getContext("2d"),
+    ctx: document.getElementById("canvas").getContext("2d"),
     camera: Camera(0, 0),
     map: {w: 0, h: 0}
 }
@@ -49,7 +49,7 @@ function frameStep(newtime) {
 }
 
 function main() {
-	document.body.style.overflow = "hidden";
+//	document.body.style.overflow = "hidden";
 	let canvas = document.getElementById("canvas");
 	(canvas.width = window.innerWidth - canvas.offsetLeft * 3),
 		(canvas.height = window.innerHeight - canvas.offsetTop * 3),

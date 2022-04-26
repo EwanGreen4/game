@@ -14,7 +14,7 @@ function loadMainMenu() {
 
 	ctx.fillStyle = "#000000";
 	ctx.font = "bold 48px serif";
-	let text = "This is the game";
+	let text = "test";
 	let textMetrics = ctx.measureText(text);
 	ctx.fillText(
 		text,
