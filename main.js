@@ -12,7 +12,7 @@ function include() {
 }
 
 //MIN-START
-include("menu.js", "audio.js");
+include("menu.js", "draw.js", "audio.js");
 //MIN-END
 
 document.addEventListener("keydown", function (event) {
@@ -26,48 +26,65 @@ document.addEventListener("keydown", function (event) {
 });
 
 window.addEventListener("resize", function (event) {
-	let canvas = document.getElementById("canvas");
-	canvas.width = window.innerWidth - canvas.offsetLeft * 3;
-	canvas.height = window.innerHeight - canvas.offsetTop * 3;
+	//let canvas = document.getElementById("canvas");
+	gamedata.canvas.width = window.innerWidth - gamedata.canvas.offsetLeft * 3;
+	gamedata.canvas.height = window.innerHeight - gamedata.canvas.offsetTop * 3;
 });
 
-let framedata = {
+const statenum = {
+    mainMenu: 0,
+    newMenu: 1,
+    cutscene: 5,
+    loadscreen: 6,
+    play: 7
+};
+
+let gamedata = {
     oldtime: 0,
-    canvas: document.getElementById("canvas"),
-    ctx: document.getElementById("canvas").getContext("2d"),
-    camera: Camera(0, 0),
+    canvas: null,
+    ctx: null,
+    gamestate: statenum.mainMenu,
+    camera: {x: 0, y: 0, w: 0, h: 0, idealh: 240, sizefac: 1, zoom: 1},
     map: {w: 0, h: 0}
 }
-function frameStep(newtime) {
-    let frametime = framedata.oldtime - newtime;
-    framedata.oldtime = newtime;
-    framedata.ctx.clearRect(0, 0, canvas.width, canvas,height);
-    framedata.camera.update(framedata.canvas, map.w, map.h);
+function gameLoop(newtime) {
+    let frametime = gamedata.oldtime - newtime;
+    gamedata.oldtime = newtime;
+    gamedata.ctx.clearRect(0, 0, gamedata.canvas.width, gamedata.canvas.height);
+    updateCamera(gamedata.camera, gamedata.canvas, gamedata.map.w, gamedata.map.h);
 
+    switch(gamedata.gamestate)
+    {
+    case statenum.mainMenu:
+        updateMainMenu(gamedata.canvas, gamedata.ctx, gamedata.camera, frametime);
+        break;
+    case statenum.newMenu:
+        updateNewGameMenu(gamedata.canvas, gamedata.ctx, gamedata.camera, frametime);
+        break;
+    case statenum.cutscene:
+            break;
+    case statenum.play:
+        updateGameplay(gamedata.canvas, gamedata.ctx, gamedata.camera, frametime)
+        break;
+    }
 
-	window.requestAnimationFrame(frameStep);
+	window.requestAnimationFrame(gameLoop);
+}
+
+function updateGameplay(canvas, ctx, camera, frametime)
+{
+    drawGame(canvas, ctx, camera, frametime, gamedata.map);
 }
 
 function main() {
 //	document.body.style.overflow = "hidden";
-	let canvas = document.getElementById("canvas");
-	(canvas.width = window.innerWidth - canvas.offsetLeft * 3),
-		(canvas.height = window.innerHeight - canvas.offsetTop * 3),
-		(ctx = canvas.getContext("2d"));
-        let result =  loadMainMenu(ctx);
+	gamedata.canvas = document.getElementById("canvas");
+	gamedata.canvas.width = window.innerWidth - canvas.offsetLeft * 3;
+	gamedata.canvas.height = window.innerHeight - canvas.offsetTop * 3;
+	gamedata.ctx = gamedata.canvas.getContext("2d");
 
-        this.addEventListener('chosen', function(event) {
-            switch(event.result) { // Wait for the main menu
-                case mainMenuEnum.newGame:
-                    alert("test")
-                    break;
-                case mainMenuEnum.loadGame:
-                    break;
-                case mainMenuEnum.settings:
-                    break;
-        }
-        }, false);
-        loadMainMenu(ctx)
+    loadMainMenu(gamedata.canvas, gamedata.ctx);
+    gameLoop(0);
 
     //let exitQueued = false;
     //while(!exitQueued) {

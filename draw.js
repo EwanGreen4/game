@@ -1,23 +1,13 @@
-class Camera {
-	constructor(width, height) {
-		this.x = 0;
-		this.y = 0;
-		this.w = width;
-		this.h = height;
-		this.idealh = 320;
-		this.sizefac = 1;
-		this.zoom = 1;
-	}
-	update(canvas, boundx, boundy) {
-		if (this.x - this.w / 2 < 0) this.x = this.w / 2;
-		else if (this.x + this.w / 2 > boundx) this.x = boundx - this.w / 2;
-		if (this.y - this.h / 2 < 0) this.y = this.h / 2;
-		else if (this.x + this.w / 2 > boundy) this.y = boundy - this.h / 2;
 
-		sizefac = round((canvas.height / this.idealh) * this.zoom);
-		this.h = canvas.height*this.sizefac;
-		this.w = (canvas.width / canvas.height) * this.h * this.zoom;
-	}
+function updateCamera(camera, canvas, boundx, boundy) {
+    if (camera.x - camera.w / 2 < 0) camera.x = camera.w / 2;
+    else if (camera.x + camera.w / 2 > boundx) camera.x = boundx - camera.w / 2;
+    if (camera.y - camera.h / 2 < 0) camera.y = camera.h / 2;
+    else if (camera.x + camera.w / 2 > boundy) camera.y = boundy - camera.h / 2;
+
+    sizefac = Math.round((canvas.height / camera.idealh) * camera.zoom);
+    camera.h = canvas.height*camera.sizefac;
+    camera.w = (canvas.width / canvas.height) * camera.h * camera.zoom;
 }
 
 function transformRectWorld(camera, rect) {
@@ -46,7 +36,10 @@ function drawSpriteWorld(ctx, camera, image, src, dst) {
 }
 function drawSpriteScreen(ctx, camera, image, src, dst) {
 	dst = transformRectScreen(camera, dst);
-	ctx.drawImage(image, src.x, src.y, src.w, src.h, dst.x, dst.y, dst.w, dst.h);
+    if(src == null)
+        ctx.drawImage(image, dst.x, dst.y, dst.w, dst.h);
+    else
+	    ctx.drawImage(image, src.x, src.y, src.w, src.h, dst.x, dst.y, dst.w, dst.h);
 }
 
 function drawMap(canvas, map) {
@@ -75,17 +68,20 @@ function drawMap(canvas, map) {
 	map.drawnmap = canvas.transferToImageBitmap();
 }
 
-function drawGame(ctx, camera, timestep, map) {
-	let canvas = ctx.canvas;
-	ctx.drawImage(
-		map.drawnmap,
-		camera.x - camera.w / 2,
-		camera.y - camera.h / 2,
-		camera.w,
-		camera.h,
-		0,
-		0,
-		canvas.w,
-		canvas.h
-	);
+function drawGame(canvas, ctx, camera, timestep, map) {
+    if(map.drawnmap != null)
+    {
+        ctx.drawImage(
+            map.drawnmap,
+            camera.x - camera.w / 2,
+            camera.y - camera.h / 2,
+            camera.w,
+            camera.h,
+            0,
+            0,
+            canvas.w,
+            canvas.h
+        );
+    }
+
 }
