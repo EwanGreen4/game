@@ -29,6 +29,8 @@ window.addEventListener("resize", function (event) {
 	//let canvas = document.getElementById("canvas");
 	gamedata.canvas.width = window.innerWidth - gamedata.canvas.offsetLeft * 3;
 	gamedata.canvas.height = window.innerHeight - gamedata.canvas.offsetTop * 3;
+	gamedata.ctx = gamedata.canvas.getContext("2d");
+    gamedata.ctx.imageSmoothingEnabled = false;
 });
 
 const statenum = {
@@ -49,7 +51,7 @@ let gamedata = {
     map: {w: 0, h: 0},
     seed: null,
 
-    offscreencanvas: null
+    offscreencanvas: document.createElement("canvas")
 }
 function gameLoop(newtime) {
     let frametime = gamedata.oldtime - newtime;
@@ -87,10 +89,6 @@ function main() {
 	gamedata.canvas.height = window.innerHeight - canvas.offsetTop * 3;
 	gamedata.ctx = gamedata.canvas.getContext("2d");
     gamedata.ctx.imageSmoothingEnabled = false;
-
-    gamedata.offscreencanvas = document.createElement("canvas");
-    let offscreenctx = gamedata.offscreencanvas.getContext('2d');
-    offscreenctx.imageSmoothingEnabled = false;
 
     loadMainMenu(gamedata.canvas, gamedata.ctx);
     gameLoop(0);

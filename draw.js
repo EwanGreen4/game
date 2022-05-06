@@ -51,6 +51,7 @@ function drawMap(canvas, map) {
 	canvas.width  = map.w * 16;
 	canvas.height = map.h * 16;
 	let ctx = canvas.getContext("2d");
+    ctx.imageSmoothingEnabled = false;
 	for (let y = 0; y < map.h; y++) {
 		for (let x = 0; x < map.w; x++) {
 			let id = map.data[y * map.w + x];
