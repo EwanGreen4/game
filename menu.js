@@ -63,6 +63,7 @@ function loadMainMenu(canvas, ctx) {
 
 function updateMainMenu(canvas, ctx, camera, frametime)
 {
+    updateCamera(gamedata.camera, gamedata.canvas, canvas.width/camera.sizefac, canvas.height/camera.sizefac);
 	ctx.fillStyle = "#ddffdd";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -76,10 +77,10 @@ function updateMainMenu(canvas, ctx, camera, frametime)
 		canvas.height / 3
 	);
 
-    let height = Math.round((canvas.height / 3) * 2);
+    let height = Math.round((camera.h / 3) * 2);
     if(mainMenuData.newGameButton != null)
     {
-        mainMenuData.newGameButton.x = Math.round(canvas.width / 3 - mainMenuData.newGameButton.w / 2);
+        mainMenuData.newGameButton.x = Math.round(camera.w / 3 - mainMenuData.newGameButton.w / 2);
         mainMenuData.newGameButton.y = Math.round(height - mainMenuData.newGameButton.h / 2);
         drawSpriteScreen(ctx, camera, mainMenuData.newGameButton.elem, null, mainMenuData.newGameButton);
     }
@@ -90,9 +91,11 @@ function loadNewGameMenu(canvas, ctx, camera)
 {
     //gamedata.gamestate = statenum.newMenu;
     gamedata.gamestate = statenum.play;
+    gamedata.seed = generateSeed("SEED & FEED");
+    gamedata.map = createMap(gamedata.seed, 0);
 }
 
 function updateNewGameMenu(canvas, ctx, camera, frametime)
 {
-    ;
+    updateCamera(gamedata.camera, gamedata.canvas, canvas.height/camera.sizefac, canvas.height/camera.sizefac);
 }

@@ -8,7 +8,26 @@ function generateSeed(string) {
 	return hash;
 }
 
-function createMap(level, seed) {
-	map.w = 20;
-	map.h = 20;
+const leveltileset = ["resource/test_tileset.png"]
+
+function createMap(seed, level) {
+    let map = {
+        w: 200,
+        h: 200,
+        data: [],
+        img: null,
+        drawnmap: null
+    }
+
+    map.img = new Image();
+    map.img.src = leveltileset[level];
+    map.img.onload = function()
+    {
+        map.data.length = map.w*map.h;
+        map.data.fill(1);
+        map.drawnmap = drawMap(gamedata.offscreencanvas, map);
+    }
+
+    
+    return map;
 }

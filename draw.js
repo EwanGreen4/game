@@ -1,13 +1,18 @@
 
 function updateCamera(camera, canvas, boundx, boundy) {
+    camera.sizefac = Math.round((canvas.height / camera.idealh) * camera.zoom);
+    camera.h = canvas.height/camera.sizefac;
+    camera.w = (canvas.width / canvas.height) * camera.h * camera.zoom;
+
     if (camera.x - camera.w / 2 < 0) camera.x = camera.w / 2;
     else if (camera.x + camera.w / 2 > boundx) camera.x = boundx - camera.w / 2;
     if (camera.y - camera.h / 2 < 0) camera.y = camera.h / 2;
     else if (camera.x + camera.w / 2 > boundy) camera.y = boundy - camera.h / 2;
 
-    sizefac = Math.round((canvas.height / camera.idealh) * camera.zoom);
-    camera.h = canvas.height*camera.sizefac;
-    camera.w = (canvas.width / canvas.height) * camera.h * camera.zoom;
+    if(boundx < camera.w)
+        camera.x = boundx/2;
+    if(boundy < camera.h)
+        camera.y = boundy/2;
 }
 
 function transformRectWorld(camera, rect) {
@@ -43,19 +48,19 @@ function drawSpriteScreen(ctx, camera, image, src, dst) {
 }
 
 function drawMap(canvas, map) {
-	canvas.w = map.w * 16;
-	canvas.h = map.h * 16;
-	ctx = canvas.getContext("2d");
+	canvas.width  = map.w * 16;
+	canvas.height = map.h * 16;
+	let ctx = canvas.getContext("2d");
 	for (let y = 0; y < map.h; y++) {
 		for (let x = 0; x < map.w; x++) {
-			id = map.data[y * map.w + map.x];
-			src = {
-				x: id / map.img.w,
-				y: id / map.img.w,
+			let id = map.data[y * map.w + x];
+			let src = {
+				x: (id % map.img.width)*16,
+				y: Math.floor(id / map.img.width)*16,
 				w: 16,
 				h: 16,
 			};
-			dst = {
+			let dst = {
 				x: x * 16,
 				y: y * 16,
 				w: 16,
@@ -64,13 +69,21 @@ function drawMap(canvas, map) {
 			drawSpriteDirect(ctx, map.img, src, dst);
 		}
 	}
-	map.ctx = ctx;
-	map.drawnmap = canvas.transferToImageBitmap();
+	//map.ctx = ctx;
+	createImageBitmap(canvas).then(function(drawnmap){
+        map.drawnmap = drawnmap;
+    });
 }
 
 function drawGame(canvas, ctx, camera, timestep, map) {
     if(map.drawnmap != null)
     {
+        let src = {
+            x: camera.x - camera.w / 2,
+            y: camera.y - camera.h / 2,
+            w: camera.w,
+            h: camera.h
+        }
         ctx.drawImage(
             map.drawnmap,
             camera.x - camera.w / 2,
@@ -79,9 +92,10 @@ function drawGame(canvas, ctx, camera, timestep, map) {
             camera.h,
             0,
             0,
-            canvas.w,
-            canvas.h
+            canvas.width,
+            canvas.heights
         );
+        //ctx.drawImage(map.drawnmap, 0, 0);
     }
 
 }

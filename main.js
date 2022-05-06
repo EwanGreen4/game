@@ -12,7 +12,7 @@ function include() {
 }
 
 //MIN-START
-include("menu.js", "draw.js", "audio.js");
+include("draw.js", "audio.js", "menu.js", "map.js");
 //MIN-END
 
 document.addEventListener("keydown", function (event) {
@@ -45,13 +45,16 @@ let gamedata = {
     ctx: null,
     gamestate: statenum.mainMenu,
     camera: {x: 0, y: 0, w: 0, h: 0, idealh: 240, sizefac: 1, zoom: 1},
-    map: {w: 0, h: 0}
+
+    map: {w: 0, h: 0},
+    seed: null,
+
+    offscreencanvas: null
 }
 function gameLoop(newtime) {
     let frametime = gamedata.oldtime - newtime;
     gamedata.oldtime = newtime;
     gamedata.ctx.clearRect(0, 0, gamedata.canvas.width, gamedata.canvas.height);
-    updateCamera(gamedata.camera, gamedata.canvas, gamedata.map.w, gamedata.map.h);
 
     switch(gamedata.gamestate)
     {
@@ -73,6 +76,7 @@ function gameLoop(newtime) {
 
 function updateGameplay(canvas, ctx, camera, frametime)
 {
+    updateCamera(gamedata.camera, gamedata.canvas, gamedata.map.w*16, gamedata.map.h*16);
     drawGame(canvas, ctx, camera, frametime, gamedata.map);
 }
 
@@ -82,6 +86,11 @@ function main() {
 	gamedata.canvas.width = window.innerWidth - canvas.offsetLeft * 3;
 	gamedata.canvas.height = window.innerHeight - canvas.offsetTop * 3;
 	gamedata.ctx = gamedata.canvas.getContext("2d");
+    gamedata.ctx.imageSmoothingEnabled = false;
+
+    gamedata.offscreencanvas = document.createElement("canvas");
+    let offscreenctx = gamedata.offscreencanvas.getContext('2d');
+    offscreenctx.imageSmoothingEnabled = false;
 
     loadMainMenu(gamedata.canvas, gamedata.ctx);
     gameLoop(0);
