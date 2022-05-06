@@ -5,8 +5,8 @@ What it does:
 - Formats all existing .js and .html files for no reason other than cleanliness
 - Creates a deployment environment separate from that of the source
   - Symlinks all non-meta directories of the parent
-  - Minifies all .js & .html files (.js -> .min.js)
-  - Replaces all instances of ".js" with ".min.js" between keywords MIN-START and MIN-END; applies to .html and .js 
+  - Minifies all .css, .js & .html files (.js/css -> .min.js/css)
+  - Replaces all instances of ".js/css" with ".min.js/css" between keywords MIN-START and MIN-END; applies to .html and .js 
 
 How to use it:
 
