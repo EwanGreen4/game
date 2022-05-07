@@ -17,10 +17,16 @@ function loadMainMenu(canvas, ctx) {
 	imgNew.src = "resource/menuNew.png";
 	imgNew.onload = function () {
 		mainMenuData.newGameButton = {
-			x: Math.round(canvas.width / 3 - this.width / 2),
-			y: Math.round(height - this.height / 2),
-			w: imgNew.width,
-			h: imgNew.height,
+            wrect: {
+                x: 0,
+                y: 0,
+                w: imgNew.width,
+                h: imgNew.height
+            },
+			x: 0,
+			y: 0,
+			w: 0,
+			h: 0,
 			elem: imgNew,
 		};
 		mouse.buttons.push(mainMenuData.newGameButton);
@@ -80,11 +86,11 @@ function updateMainMenu(canvas, ctx, camera, frametime)
     let height = Math.round((camera.h / 3) * 2);
     if(mainMenuData.newGameButton != null)
     {
-        mainMenuData.newGameButton.x = Math.round(camera.w / 3 - mainMenuData.newGameButton.w / 2);
-        mainMenuData.newGameButton.y = Math.round(height - mainMenuData.newGameButton.h / 2);
-        drawSpriteScreen(ctx, camera, mainMenuData.newGameButton.elem, null, mainMenuData.newGameButton);
+        mainMenuData.newGameButton.wrect.x = Math.round(camera.w / 3 - mainMenuData.newGameButton.wrect.w / 2);
+        mainMenuData.newGameButton.wrect.y = Math.round(height - mainMenuData.newGameButton.wrect.h / 2);
+        drawSpriteScreen(ctx, camera, mainMenuData.newGameButton.elem, null, mainMenuData.newGameButton.wrect);
     }
-
+    updateButtons(camera);
 }
 
 function loadNewGameMenu(canvas, ctx, camera)

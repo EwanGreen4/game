@@ -12,8 +12,8 @@ const leveltileset = ["resource/test_tileset.png"]
 
 function createMap(seed, level) {
     let map = {
-        w: 200,
-        h: 200,
+        w: 20,
+        h: 20,
         data: [],
         img: null,
         drawnmap: null

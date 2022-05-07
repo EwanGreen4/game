@@ -33,6 +33,20 @@ let mouse = {
 	trackedEvents: ["mousedown", "mouseup", "mousemove"],
 };
 
+function updateButtons(camera)
+{
+    for (const button of mouse.buttons)
+    {
+        if(button.wrect != null)
+        {
+            button.x = button.wrect.x * camera.sizefac;
+            button.y = button.wrect.y * camera.sizefac;
+            button.w = button.wrect.w * camera.sizefac;
+            button.h = button.wrect.h * camera.sizefac;
+        }
+    }
+}
+
 // Custom mouse event propagator for HTMLCanvas
 mouse.trackedEvents.forEach((event) =>
 	document.getElementById("canvas").addEventListener(

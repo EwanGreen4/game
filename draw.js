@@ -84,18 +84,14 @@ function drawGame(canvas, ctx, camera, timestep, map) {
             y: camera.y - camera.h / 2,
             w: camera.w,
             h: camera.h
+        };
+        let dst = {
+            x: 0,
+            y: 0,
+            w: canvas.width,
+            h: canvas.height
         }
-        ctx.drawImage(
-            map.drawnmap,
-            camera.x - camera.w / 2,
-            camera.y - camera.h / 2,
-            camera.w,
-            camera.h,
-            0,
-            0,
-            canvas.width,
-            canvas.heights
-        );
+        drawSpriteDirect(ctx, map.drawnmap, src, dst);
         //ctx.drawImage(map.drawnmap, 0, 0);
     }
 
